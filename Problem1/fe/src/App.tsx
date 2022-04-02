@@ -1,48 +1,43 @@
-import React from 'react';
-import axios from 'axios'
-import './App.css';
+import React from "react";
+import axios from "axios";
+import "./App.css";
 
-
-interface Pattern{
+interface Pattern {
   obj: {
-    num: number,
-    text: string,
-  }[]
-};
+    num: number;
+    text: string;
+  }[];
+}
 
 const url = "http://localhost:8080/" as string;
 const pattern = {
-    "obj":
-        [
-            { "num": 4, "text": "fizz" },
-            { "num": 7, "text": "buzz" },
-            { "num": 8, "text": "hoge" },
-            { "num": 15, "text": "huga" }
-        ]
+  obj: [
+    { num: 4, text: "fizz" },
+    { num: 7, text: "buzz" },
+    { num: 8, text: "hoge" },
+    { num: 15, text: "huga" },
+  ],
 } as Pattern;
 
 class App extends React.Component<{}, { ans: string }> {
-  constructor(props: any){
-    super(props)
-    this.state = {ans : 'FizzBuzz'};
-    this.func = this.func.bind(this)
+  constructor(props: any) {
+    super(props);
+    this.state = { ans: "FizzBuzz" };
+    this.func = this.func.bind(this);
   }
-  
-  func(){
-    const params = new URLSearchParams();
-    params.append('pattern', JSON.stringify(pattern));
 
-    axios.post(url, params)
+  func() {
+    axios
+      .post(url, pattern)
       .then((response: any) => {
-        this.setState({ans : response.data})
+        this.setState({ ans: response.data });
       })
       .catch((err: any) => {
-        console.log(err)
+        console.log(err);
       });
-
   }
 
-  render(){
+  render() {
     return (
       <div className="App">
         <header className="App-header">
@@ -56,6 +51,6 @@ class App extends React.Component<{}, { ans: string }> {
       </div>
     );
   }
-};
- 
+}
+
 export default App;
